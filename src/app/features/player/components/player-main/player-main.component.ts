@@ -11,7 +11,7 @@ export class PlayerMainComponent implements OnInit {
   currentTrack: Track | null = null;
   isPlaying: boolean = false;
   currentTime: number = 0;
-  duration: number = 30; // Preview duration
+  duration: number = 30; 
 
   constructor(private playerService: PlayerService) {}
 
