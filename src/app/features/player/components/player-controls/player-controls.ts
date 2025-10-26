@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Track } from '../../../../core/models/track.model';
-import { PlayerService } from '';
+import { PlayerService } from '../../services/player.service';
 import { CommonModule } from '@angular/common';
 
 
