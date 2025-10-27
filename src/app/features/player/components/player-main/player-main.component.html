@@ -1,29 +1,27 @@
 <div class="player-container">
   <div class="player-main">
-    <div class="album-art-container">
-      <div class="glow-ring"></div>
-      <div class="album-art" *ngIf="currentTrack">
-        <img [src]="currentTrack.imageUrl" [alt]="currentTrack.name">
+    
+    <app-playlist-sidebar (trackSelected)="onTrackSelected($event)"></app-playlist-sidebar>
+
+    <div class="current-track-display" *ngIf="currentTrack">
+      <div class="album-circle">
+        <img [src]="currentTrack.album.images[0]?.url" [alt]="currentTrack.name" />
       </div>
-      <div class="album-art placeholder" *ngIf="!currentTrack">
-        <div class="placeholder-content">♪</div>
+
+      <div class="track-details">
+        <h2 class="track-name">{{ currentTrack.name }}</h2>
+        <p class="artist-name">{{ currentTrack.artists[0]?.name }}</p>
       </div>
     </div>
 
     <div class="controls">
-      <button 
-        class="control-btn previous" 
-        (click)="previous()"
-        [disabled]="!currentTrack">
+      <button class="control-btn previous" (click)="previous()" [disabled]="!currentTrack">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
           <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
         </svg>
       </button>
 
-      <button 
-        class="control-btn play-pause" 
-        (click)="togglePlayPause()"
-        [disabled]="!currentTrack">
+      <button class="control-btn play-pause" (click)="togglePlayPause()" [disabled]="!currentTrack">
         <svg *ngIf="!isPlaying" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
           <path d="M8 5v14l11-7z"/>
         </svg>
@@ -32,57 +30,27 @@
         </svg>
       </button>
 
-      <button 
-        class="control-btn next" 
-        (click)="next()"
-        [disabled]="!currentTrack">
+      <button class="control-btn next" (click)="next()" [disabled]="!currentTrack">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
           <path d="M16 18h2V6h-2zM6 18l8.5-6L6 6z"/>
         </svg>
       </button>
     </div>
 
-    <div class="secondary-controls">
-      <button 
-        class="secondary-btn" 
-        [class.active]="isShuffle"
-        (click)="toggleShuffle()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
-        </svg>
-      </button>
-
-      <button 
-        class="secondary-btn like-btn" 
-        [class.active]="isLiked"
-        (click)="toggleLike()">
-        <svg width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isLiked ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-      </button>
-
-      <button 
-        class="secondary-btn" 
-        [class.active]="isRepeat"
-        (click)="toggleRepeat()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 1l4 4-4 4"/>
-          <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
-          <path d="M7 23l-4-4 4-4"/>
-          <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-        </svg>
-      </button>
-
-      <button class="secondary-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 18V5l12-2v13M9 13c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
-        </svg>
-      </button>
+    <div class="progress-container" *ngIf="currentTrack">
+      <input 
+        type="range" 
+        min="0" 
+        [max]="duration" 
+        [value]="currentTime" 
+        (input)="onSeek($event)" 
+        step="0.1"
+      />
+      <div class="time-info">
+        <span>{{ formatTime(currentTime) }}</span>
+        <span>{{ formatTime(duration) }}</span>
+      </div>
     </div>
 
-    <div class="track-info" *ngIf="currentTrack">
-      <h2 class="track-name">{{ currentTrack.name }}</h2>
-      <p class="artist-name">{{ currentTrack.artist }}</p>
-    </div>
   </div>
 </div>
