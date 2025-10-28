@@ -4,13 +4,14 @@ import { PlayerMainComponent } from './components/player-main/player-main.compon
 import { PlaylistSidebarComponent } from './components/playlist-sidebar/playlist-sidebar.component';
 import { PlayerControlsComponent } from '../../features/player/components/player-controls/player-controls.components';
 import { PlayerService } from './services/player.service';
+import { NavbarComponent } from '../../core/components/navbar/navbar.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   providers: [
-    PlayerService
+    PlayerService,
   ]
 })
 export class PlayerModule { }

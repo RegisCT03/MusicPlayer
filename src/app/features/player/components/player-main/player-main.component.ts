@@ -6,6 +6,7 @@ import { PlayerService } from '../../services/player.service';
 import { SpotifyService } from '../../../../core/services/spotify.service';
 import { Track } from '../../../../core/models/track.model';
 import { SpotifySearchResponse } from '../../../../core/models/spotify-search-response-model';
+import { NavbarComponent } from '../../../../core/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-player-main',
@@ -23,6 +24,7 @@ export class PlayerMainComponent implements OnInit, OnDestroy {
   isRepeat = false;
   isLiked = false;
   tracks: Track[] = [];
+  fetchedTracks: Track[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -66,11 +68,17 @@ export class PlayerMainComponent implements OnInit, OnDestroy {
         this.isRepeat = repeat;
       });
 
-    this.playerService.playlist$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((playlist: Track[]) => {
-        this.tracks = playlist;
-      });
+      this.playerService.playlist$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((playlist: Track[]) => {
+          this.tracks = playlist;
+        });
+
+      this.playerService.playlist2$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((playlist: Track[]) => {
+          this.fetchedTracks = playlist;
+        });
 
     this.loadInitialPlaylist();
   }
@@ -78,6 +86,25 @@ export class PlayerMainComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  searchTracks(query: string): void {
+    if (!query) {
+      this.fetchedTracks = [];
+      return;
+    }
+
+    this.spotifyService.searchTracks(query)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: SpotifySearchResponse) => {
+          this.fetchedTracks = response.tracks.items;
+        },
+        error: (err) => {
+          console.error('Error al buscar canciones:', err);
+          this.fetchedTracks = [];
+        }
+      });
   }
 
   loadInitialPlaylist(): void {
@@ -130,7 +157,11 @@ export class PlayerMainComponent implements OnInit, OnDestroy {
     return this.duration > 0 ? (this.currentTime / this.duration) * 100 : 0;
   }
   onTrackSelected(track: Track): void {
-  this.playerService.playTrack(track); 
-}
+    this.playerService.playTrack(track); 
+  }
+
+  clearFetchedTracks(): void {
+    this.playerService.clearPlayList2();
+  }
 
 }

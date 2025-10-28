@@ -12,14 +12,14 @@ export class SpotifyService {
 
   
   searchTracks(query: string): Observable<SpotifySearchResponse> {
-  const token = this.auth.getToken();
-  const headers = new HttpHeaders({
-    Authorization: `Bearer ${token}`
-  });
+    const token = this.auth.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
 
-  return this.http.get<SpotifySearchResponse>(
-    `https://api.spotify.com/v1/search?q=${query}&type=track&limit=10`,
-    { headers }
-  );
-}
+    return this.http.get<SpotifySearchResponse>(
+      `https://api.spotify.com/v1/search?q=${query}&type=track,album,artist&limit=10`,
+      { headers }
+    );
+  }
 }

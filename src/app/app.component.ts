@@ -41,13 +41,13 @@ export class AppComponent {
 }
   onSearch(query: string): void {
     this.spotifyService.searchTracks(query).subscribe((response: any) => {
-  const items = response.tracks.items;
-  if (items.length > 0) {
-    this.playerService.setPlaylist(items);
-    this.playerService.playTrack(items[0]);
-  }
-});
-
+      const items = response.tracks.items;
+      
+      if (items.length > 0) {
+        this.playerService.setPlaylist2(items);
+        // this.playerService.playTrack(items[0]);
+      }
+    });
   }
 
   loginWithSpotify(): void {

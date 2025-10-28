@@ -1,5 +1,10 @@
+<div class="back-button-container" *ngIf="fetchedTracks.length > 0">
+  <button class="back-button" (click)="clearFetchedTracks()">
+    Back to Playlist
+  </button>
+</div>
 <div class="player-container">
-  <div class="player-main">
+  <div class="player-main" *ngIf="fetchedTracks.length == 0">
     
     <app-playlist-sidebar (trackSelected)="onTrackSelected($event)"></app-playlist-sidebar>
 
@@ -52,5 +57,26 @@
       </div>
     </div>
 
+  </div>
+  <div class="playlist-fetched" *ngIf="fetchedTracks.length > 0">
+    <div class="playlist-content">
+      <div 
+        *ngFor="let track of fetchedTracks; let i = index"
+        class="track-item"
+        >
+        <div class="track-thumbnail">
+          <img [src]="track.album.images[0]?.url" [alt]="track.name">
+          <div class="play-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="track-details">
+          <h3 class="track-title">{{ track.name }}</h3>
+          <p class="track-artist">{{ track.artists[0]?.name }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

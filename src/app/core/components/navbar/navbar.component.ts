@@ -12,9 +12,17 @@ export class NavbarComponent {
   @Output() searchQuery = new EventEmitter<string>();
   searchTerm = '';
 
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.searchQuery.emit('');
+  }
+
   onSearch(): void {
     if (this.searchTerm.trim()) {
       this.searchQuery.emit(this.searchTerm);
+      setTimeout(() => {
+        this.searchTerm = '';
+      }, 500);
     }
   }
 

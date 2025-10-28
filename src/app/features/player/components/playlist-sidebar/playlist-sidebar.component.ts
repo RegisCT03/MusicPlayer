@@ -16,10 +16,12 @@ import { Output, EventEmitter } from '@angular/core';
 export class PlaylistSidebarComponent implements OnInit {
   @Output() trackSelected = new EventEmitter<Track>();
   playlist$: Observable<Track[]>;
+  playlistTracked$: Observable<Track[]>;
   currentTrack$: Observable<Track | null>;
 
   constructor(public playerService: PlayerService) {
     this.playlist$ = this.playerService.playlist$;
+    this.playlistTracked$ = this.playerService.playlist2$;
     this.currentTrack$ = this.playerService.currentTrack$;
   }
 

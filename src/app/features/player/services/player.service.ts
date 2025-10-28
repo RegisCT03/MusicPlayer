@@ -8,6 +8,7 @@ export class PlayerService {
   private isPlayingSubject = new BehaviorSubject<boolean>(false);
   private currentTimeSubject = new BehaviorSubject<number>(0);
   private playlistSubject = new BehaviorSubject<Track[]>([]);
+  private playlistSubject2 = new BehaviorSubject<Track[]>([]);
   private currentIndexSubject = new BehaviorSubject<number>(0);
 
   private audio: HTMLAudioElement | null = null;
@@ -19,6 +20,7 @@ export class PlayerService {
   isPlaying$: Observable<boolean> = this.isPlayingSubject.asObservable();
   currentTime$: Observable<number> = this.currentTimeSubject.asObservable();
   playlist$: Observable<Track[]> = this.playlistSubject.asObservable();
+  playlist2$: Observable<Track[]> = this.playlistSubject2.asObservable();
   isShuffle$: Observable<boolean> = this.isShuffleSubject.asObservable();
   isRepeat$: Observable<boolean> = this.isRepeatSubject.asObservable();
 
@@ -41,6 +43,14 @@ export class PlayerService {
 
   setPlaylist(tracks: Track[]): void {
     this.playlistSubject.next(tracks);
+  }
+
+  setPlaylist2(tracks: Track[]): void {
+    this.playlistSubject2.next(tracks);
+  }
+
+  clearPlayList2(): void {
+    this.playlistSubject2.next([]);
   }
 
   playTrack(track: Track): void {
