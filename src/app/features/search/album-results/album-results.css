@@ -1,0 +1,9 @@
+.card img {
+  height: 220px;
+}
+.info small {
+  display: block;
+  margin-top: 0.3rem;
+  color: #666;
+  font-size: 0.85rem;
+}

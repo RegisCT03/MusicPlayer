@@ -1,0 +1,9 @@
+<div class="results-container">
+  <div *ngFor="let artist of artists" class="card fade-in">
+    <img [src]="artist.images?.[0]?.url || 'assets/no-image.png'" alt="Artista" />
+    <div class="info">
+      <h3>{{ artist.name }}</h3>
+      <small *ngIf="artist.followers">👥 {{ artist.followers.total | number }} seguidores</small>
+    </div>
+  </div>
+</div>

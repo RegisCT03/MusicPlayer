@@ -11,7 +11,11 @@ import { NavbarComponent } from '../../../../core/components/navbar/navbar.compo
 @Component({
   selector: 'app-player-main',
   standalone: true,
-  imports: [CommonModule,PlaylistSidebarComponent],
+  imports: [
+    CommonModule,
+    PlaylistSidebarComponent,
+    NavbarComponent
+  ],
   templateUrl: './player-main.component.html',
   styleUrls: ['./player-main.component.css']
 })

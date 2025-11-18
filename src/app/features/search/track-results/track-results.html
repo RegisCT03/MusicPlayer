@@ -1,0 +1,11 @@
+<div class="results-container">
+  <div *ngFor="let track of tracks" class="card fade-in">
+    <img [src]="track.album.images[0]?.url || 'assets/no-image.png'" alt="Álbum" />
+    <div class="info">
+      <h3>{{ track.name }}</h3>
+      <p>{{ track.artists[0]?.name }}</p>
+      <audio *ngIf="track.preview_url" controls [src]="track.preview_url"></audio>
+      <div *ngIf="!track.preview_url" class="no-audio">🔇 Sin vista previa</div>
+    </div>
+  </div>
+</div>

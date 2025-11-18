@@ -1,0 +1,10 @@
+<div class="results-container">
+  <div *ngFor="let album of albums" class="card fade-in">
+    <img [src]="album.images[0]?.url || 'assets/no-image.png'" alt="Álbum" />
+    <div class="info">
+      <h3>{{ album.name }}</h3>
+      <p>{{ album.artists[0]?.name }}</p>
+      <small>{{ album.release_date }}</small>
+    </div>
+  </div>
+</div>
